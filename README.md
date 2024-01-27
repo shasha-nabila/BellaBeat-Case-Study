@@ -93,6 +93,8 @@ str(daily_calories)
 str(daily_steps)
 str(daily_sleep)
 ```
+![Format Error Image](images/format_error1.png)
+![Format Error Image](images/format_error2.png)
 
 Following a quick review of the output, there are a few issues that need to be addressed:
 - daily_activity$ActivityDate — Is formatted as CHR, not as a date format
@@ -125,6 +127,8 @@ cleaned_daily_sleep <- daily_sleep %>%
 # Converting Date column to date format
 cleaned_daily_sleep$Date <- as.Date(cleaned_daily_sleep$Date, "%m/%d/%Y")
 ```
+![Format Error Image](images/format_fix1.png)
+![Format Error Image](images/format_fix2.png)
 
 Next, check for duplicates.
 ```
@@ -134,8 +138,7 @@ daily_calories %>% duplicated() %>% sum()
 daily_steps %>% duplicated() %>% sum()
 cleaned_daily_sleep %>% duplicated() %>% sum()
 ```
-
-**PICTURES HERE PLEASE**
+![Duplicate Error Image](images/duplicate_error.png)
 
 cleaned_daily_sleep dataset has 3 duplicates; thus, it needs to be removed.
 ```
@@ -143,6 +146,7 @@ cleaned_daily_sleep dataset has 3 duplicates; thus, it needs to be removed.
 cleaned_daily_sleep <- cleaned_daily_sleep %>% distinct() %>% drop_na()
 cleaned_daily_sleep %>% duplicated() %>% sum()
 ```
+![Duplicate Error Image](images/duplicate_fix.png)
 
 Then, check the number of participants in each dataset.
 ```
@@ -152,6 +156,7 @@ n_distinct(daily_calories$Id)
 n_distinct(daily_steps$Id)
 n_distinct(cleaned_daily_sleep$Id)
 ```
+![Participants Number Image](images/num_participants.png)
 
 #### Merging the data
 Finally, combining the data frames for daily_activity and cleaned_daily_sleep will enable us to evaluate potential correlations between the variables in both tables.
@@ -179,14 +184,13 @@ daily_activity %>%
 daily_steps %>% select(StepTotal) %>% summary()
 cleaned_daily_sleep %>% select(TotalMinutesAsleep) %>% summary()
 ```
-
-**PICTURES HERE PLEASE**
+![Statistical Summaries Image](images/summaries.png)
 
 Observations from the statistical summaries above:
 - The majority of the participants are lightly active.
 - The average sedentary minutes were 991.2, which is 16.5 hours a day.
 - The average number of steps per day is 7638.
-- The average minutes spent asleep were 419.2, which is 7 hours a day.
+- The average time spent asleep was 419.2 minutes, which equates to 7 hours per day.
 <br>
 
 #### Further analysis
@@ -210,8 +214,7 @@ ggplot(average_steps_per_day, aes(x = Weekday, y = AverageSteps)) +
   labs(title = "Average Steps Taken per Day", x = "Day of the Week",
        y = "Average Steps")
 ```
-
-**PICTURES HERE PLEASE**
+![Average Steps Per Day Image](images/avg_steps.png)
 
 Upon analyzing the bar graph showing the average daily steps, it's evident that users tend to take the most steps on Tuesdays and Saturdays, followed by Mondays and Wednesdays. In contrast, they take the fewest steps on Sundays.
 
@@ -223,14 +226,13 @@ ggplot(daily_activity, aes(x = TotalSteps, y = Calories)) +
   labs(title = "Total Steps vs Calories Burned", x = "Total Steps", y =
       "Calories Burned")
 ```
+![Step Vs Calories Image](images/steps_calories.png)
 
-**PICTURES HERE PLEASE**
 ```
 # Compute the correlation between total steps and calories burned
 cor(daily_activity$TotalSteps, daily_activity$Calories, method = "pearson")
 ```
-
-**PICTURES HERE PLEASE**
+![Steps & Calories Correlation Image](images/corr_steps_calories.png)
 
 By examining the scatterplot and the computed correlation coefficient between total steps and calories burned, it is evident that there is a strong positive relationship between these two variables. As users' total steps increase, the amount of calories burned also increases. This is supported by the correlation coefficient being closer to 1.
 
@@ -243,15 +245,15 @@ ggplot(combined_activity_and_sleep,
   labs(title = "Total Minutes Asleep vs Sedentary Minutes",
        x = "Total Minutes Asleep", y = "Sedentary Minutes")
 ```
+![Sleep Vs Sedentary Image](images/sleep_sedentary.png)
 
-**PICTURES HERE PLEASE**
 ```
 # Compute the correlation between total minutes asleep and sedentary minutes
 cor(combined_activity_and_sleep$TotalMinutesAsleep,
   combined_activity_and_sleep$SedentaryMinutes, method = "pearson")
 ```
+![Sleep & Sedentary Correlation Image](images/corr_sleep_sedentary.png)
 
-**PICTURES HERE PLEASE** <br>
 After looking at the scatterplot and the computed correlation coefficient above, it's apparent that there exists a negative correlation between SedentaryMinutes and TotalMinutesAsleep. This implies that users who become less active tend to get less sleep.
 
 Lastly, finding the relationship between total minutes asleep and total minutes in bed :
@@ -262,15 +264,14 @@ ggplot(cleaned_daily_sleep, aes(x = TotalMinutesAsleep, y = TotalTimeInBed)) +
   labs(title = 'Total Minutes Asleep vs Total Minutes in Bed',
        x = 'Total Minutes Asleep', y = 'Total Minutes in Bed')
 ```
+![Sleep Vs Bed Image](images/sleep_bed.png)
 
-**PICTURES HERE PLEASE**
 ```
 # Compute the correlation between total minutes asleep and total minutes in bed
 cor(combined_activity_and_sleep$TotalMinutesAsleep,
     combined_activity_and_sleep$TotalTimeInBed, method = "pearson")
 ```
-
-**PICTURES HERE PLEASE**
+![Sleep & Bed Correlation Image](images/corr_sleep_bed.png)
 
 The scatterplot clearly shows a linear relationship between total minutes in bed and total minutes asleep. This is supported by the calculated correlation coefficient close to 1, indicating a strong relationship between these variables.
 <br>
