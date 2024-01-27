@@ -279,6 +279,12 @@ The scatterplot clearly shows a linear relationship between total minutes in bed
 ## 5. Share 
 [Back to Top](#about-bellabeat)
 
+For visualizations related to this project, please refer to the [Analyze section](#4-analyze) where they are comprehensively detailed.
+<br>
+
+## 6. Act
+[Back to Top](#about-bellabeat)
+
 #### Conclusion
 Based on the analysis, the following conclusions can be drawn:
 - Though the average daily steps are above 6,000, users’ average sedentary minutes is too high, which is 16.5 hours a day, and they are also mostly lightly active.
